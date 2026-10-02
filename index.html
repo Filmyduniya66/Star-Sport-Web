@@ -1,516 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta charset="utf-8">
 
-<title>FanCode Live Events</title>
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<meta name="referrer" content="no-referrer">
+<meta name="mobile-web-app-capable" content="yes">
+
+<title>Star Sports Web</title>
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.compiled.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.js"></script>
 
 <style>
 *{
   box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#05070b;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-  margin:0;
-  background:#080b12;
-  color:#fff;
-  font-family:Arial, sans-serif;
+  min-height:100vh;
 }
 
-.header{
+button,input{
+  font:inherit;
+}
+
+.topbar{
   position:sticky;
   top:0;
-  z-index:10;
-  padding:16px;
-  background:#0d111b;
-  border-bottom:1px solid #202636;
+  z-index:1000;
+  background:rgba(5,7,11,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:12px;
 }
 
-.header h1{
-  margin:0;
-  font-size:22px;
+.topbar-inner{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.header p{
-  margin:6px 0 0;
-  color:#9da6b8;
-  font-size:13px;
+.logo-title{
+  font-size:18px;
+  font-weight:900;
+  white-space:nowrap;
 }
 
 .search{
-  margin-top:12px;
+  flex:1;
+}
+
+.search input{
   width:100%;
-  padding:12px 14px;
-  border-radius:10px;
-  border:1px solid #293143;
-  background:#141a26;
+  height:40px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  background:#10141c;
   color:#fff;
+  padding:0 13px;
   outline:none;
 }
 
-.container{
-  padding:15px;
-  max-width:1100px;
-  margin:auto;
+.search input:focus{
+  border-color:#3b82f6;
 }
 
-.status{
-  margin-bottom:14px;
-  color:#9da6b8;
-  font-size:13px;
+.groups{
+  display:flex;
+  gap:7px;
+  overflow-x:auto;
+  padding-top:10px;
+  scrollbar-width:none;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:14px;
+.groups::-webkit-scrollbar{
+  display:none;
 }
 
-.card{
-  overflow:hidden;
-  border:1px solid #242c3d;
-  border-radius:14px;
-  background:#10151f;
-}
-
-.poster{
-  width:100%;
-  aspect-ratio:16/9;
-  object-fit:cover;
-  display:block;
-  background:#171d29;
-}
-
-.info{
-  padding:13px;
-}
-
-.category{
-  color:#8ea2ff;
+.group-btn{
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.1);
+  background:#10141c;
+  color:#cbd5e1;
+  border-radius:20px;
+  padding:7px 12px;
   font-size:11px;
-  text-transform:uppercase;
-  margin-bottom:7px;
-}
-
-.title{
-  font-size:15px;
   font-weight:700;
-  line-height:1.35;
 }
 
-.teams{
+.group-btn.active{
+  background:#2563eb;
+  color:#fff;
+  border-color:#2563eb;
+}
+
+#channel-list{
+  padding:12px;
+}
+
+#ch-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.ch-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:155px;
+  padding:10px;
+  border-radius:15px;
+  background:linear-gradient(145deg,#111722,#0b0f16);
+  border:1px solid rgba(255,255,255,.07);
+  color:#fff;
+  text-decoration:none;
+  overflow:hidden;
+  transition:.2s;
+}
+
+.ch-card:active{
+  transform:scale(.97);
+}
+
+.ch-card .accent{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:#2563eb;
+}
+
+.ch-card .number{
+  position:absolute;
+  top:8px;
+  left:8px;
+  min-width:22px;
+  height:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:7px;
+  background:rgba(0,0,0,.6);
+  font-size:9px;
+  font-weight:800;
+  z-index:2;
+}
+
+.ch-card .group-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  max-width:75px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  padding:4px 7px;
+  border-radius:8px;
+  background:rgba(37,99,235,.15);
+  color:#60a5fa;
+  font-size:7px;
+  font-weight:800;
+  z-index:2;
+}
+
+.ch-logo{
+  width:100px;
+  height:70px;
+  object-fit:contain;
+  margin-top:15px;
+  border-radius:10px;
+  background:#080b10;
+}
+
+.ch-initials{
+  width:100px;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:15px;
+  border-radius:10px;
+  background:#151b26;
+  font-size:22px;
+  font-weight:900;
+  color:#64748b;
+}
+
+.ch-name{
+  width:100%;
   margin-top:8px;
-  color:#c4cad6;
+  text-align:center;
+  font-size:11px;
+  font-weight:800;
+  line-height:1.35;
+  color:#f8fafc;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.fancode-card{
+  min-height:190px;
+}
+
+.fancode-card .ch-logo{
+  width:100%;
+  max-width:180px;
+  height:95px;
+  max-height:95px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.fancode-teams{
+  width:100%;
+  margin-top:5px;
+  text-align:center;
+  font-size:10px;
+  font-weight:700;
+  line-height:1.4;
+  color:#cbd5e1;
+}
+
+.fancode-status{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  margin-top:5px;
+  padding:3px 8px;
+  border-radius:10px;
+  background:rgba(239,68,68,.15);
+  color:#f87171;
+  font-size:8px;
+  font-weight:800;
+}
+
+.empty{
+  grid-column:1/-1;
+  padding:40px 15px;
+  text-align:center;
+  color:#64748b;
   font-size:13px;
 }
 
-.live{
-  display:inline-block;
-  margin-top:10px;
-  padding:4px 8px;
-  border-radius:5px;
-  background:#d71920;
-  color:white;
-  font-size:11px;
-  font-weight:bold;
+#pc{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  display:none;
+  background:#000;
 }
 
-.time{
-  margin-top:7px;
-  color:#8993a6;
-  font-size:12px;
-}
-
-.watch{
+#pc.show{
   display:block;
-  width:100%;
-  margin-top:12px;
-  padding:10px;
-  border:0;
-  border-radius:8px;
-  background:#fff;
-  color:#080b12;
-  font-weight:bold;
-  text-align:center;
-  cursor:pointer;
 }
 
-.error{
-  padding:20px;
-  border:1px solid #4a2630;
-  border-radius:10px;
-  color:#ff9da8;
-  background:#211218;
-}
-</style>
-</head>
-
-<body>
-
-<header class="header">
-  <h1>🏏 FanCode Live Events</h1>
-  <p>Live matches and sports events</p>
-
-  <input
-    id="search"
-    class="search"
-    type="search"
-    placeholder="Search match, team or tournament..."
-  >
-</header>
-
-<main class="container">
-
-  <div id="status" class="status">
-    Loading events...
-  </div>
-
-  <div id="events" class="grid"></div>
-
-</main>
-
-<script>
-
-const API =
-"https://raw.githubusercontent.com/drmlive/fancode-live-events/refs/heads/main/fancode.json";
-
-let matches = [];
-
-
-/* ------------------------------
-   Load JSON
------------------------------- */
-
-async function loadData(){
-
-  const status =
-    document.getElementById("status");
-
-  const container =
-    document.getElementById("events");
-
-  try{
-
-    status.textContent =
-      "Loading events...";
-
-    const response =
-      await fetch(API,{
-        cache:"no-store",
-        headers:{
-          "Accept":"application/json"
-        }
-      });
-
-    if(!response.ok){
-
-      throw new Error(
-        "HTTP " + response.status
-      );
-
-    }
-
-    const data =
-      await response.json();
-
-    if(
-      !data ||
-      !Array.isArray(data.matches)
-    ){
-
-      throw new Error(
-        "Invalid FanCode JSON format"
-      );
-
-    }
-
-    matches = data.matches;
-
-    render(matches);
-
-    status.textContent =
-      matches.length +
-      " events loaded";
-
-  }catch(error){
-
-    console.error(error);
-
-    status.textContent = "";
-
-    container.innerHTML = `
-      <div class="error">
-        Failed to load events.<br><br>
-        ${escapeHTML(error.message)}
-      </div>
-    `;
-
-  }
+.player-head{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.8),transparent);
 }
 
-
-/* ------------------------------
-   Render cards
------------------------------- */
-
-function render(list){
-
-  const container =
-    document.getElementById("events");
-
-  if(!list.length){
-
-    container.innerHTML = `
-      <div class="error">
-        No matching events found.
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML =
-    list.map((match,index)=>{
-
-      const image =
-        match.src || "";
-
-      const title =
-        match.match_name ||
-        match.title ||
-        "Unknown Match";
-
-      const category =
-        match.event_category ||
-        "Sports";
-
-      const team1 =
-        match.team_1 || "";
-
-      const team2 =
-        match.team_2 || "";
-
-      const status =
-        match.status || "";
-
-      const start =
-        match.startTime || "";
-
-      return `
-
-        <article class="card">
-
-          ${
-            image
-            ? `
-              <img
-                class="poster"
-                src="${escapeAttr(image)}"
-                alt="${escapeAttr(title)}"
-                loading="lazy"
-                onerror="this.style.display='none'"
-              >
-            `
-            : ""
-          }
-
-          <div class="info">
-
-            <div class="category">
-              ${escapeHTML(category)}
-            </div>
-
-            <div class="title">
-              ${escapeHTML(title)}
-            </div>
-
-            ${
-              team1 || team2
-              ? `
-                <div class="teams">
-                  ${escapeHTML(team1)}
-                  ${
-                    team1 && team2
-                    ? " vs "
-                    : ""
-                  }
-                  ${escapeHTML(team2)}
-                </div>
-              `
-              : ""
-            }
-
-            ${
-              status
-              ? `
-                <span class="live">
-                  ${escapeHTML(status)}
-                </span>
-              `
-              : ""
-            }
-
-            ${
-              start
-              ? `
-                <div class="time">
-                  ${escapeHTML(start)}
-                </div>
-              `
-              : ""
-            }
-
-            <button
-              class="watch"
-              onclick="watchEvent(${index})"
-            >
-              View Event
-            </button>
-
-          </div>
-
-        </article>
-
-      `;
-
-    }).join("");
-
-}
-
-
-/* ------------------------------
-   Search
------------------------------- */
-
-document
-  .getElementById("search")
-  .addEventListener("input",function(){
-
-    const q =
-      this.value
-        .toLowerCase()
-        .trim();
-
-    if(!q){
-
-      render(matches);
-
-      document.getElementById("status")
-        .textContent =
-        matches.length +
-        " events loaded";
-
-      return;
-    }
-
-    const filtered =
-      matches.filter(match=>{
-
-        const text = [
-
-          match.match_name,
-          match.title,
-          match.event_name,
-          match.event_category,
-          match.team_1,
-          match.team_2,
-          match.status
-
-        ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-        return text.includes(q);
-
-      });
-
-    render(filtered);
-
-    document.getElementById("status")
-      .textContent =
-      filtered.length +
-      " matching events";
-
-  });
-
-
-/* ------------------------------
-   Event action
------------------------------- */
-
-function watchEvent(index){
-
-  const match =
-    matches[index];
-
-  if(!match){
-    return;
-  }
-
-  /*
-    The JSON contains stream fields such as
-    dai_url/adfree_url.
-
-    This example does not automatically
-    bypass authentication, DRM, cookies,
-    or access restrictions.
-  */
-
-  const url =
-    match.adfree_url ||
-    match.dai_url ||
-    "";
-
-  if(!url){
-
-    alert(
-      "No playable stream URL is available."
-    );
-
-    return;
-  }
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ------------------------------
-   Security helpers
------------------------------- */
-
-function escapeHTML(value){
-
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-function escapeAttr(value){
-
-  return escapeHTML(value);
-
-}
-
-
-/* ------------------------------
-   Start
------------------------------- */
-
-loadData();
-
-</script>
-
-</body>
-</html>
+.back-btn{
+  width:38px;
+  height:38px
