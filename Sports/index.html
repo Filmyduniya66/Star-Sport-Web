@@ -225,12 +225,9 @@ video.mode-cover{object-fit:cover}
 "use strict";
 
 /* ═══════════ API CONFIG ═══════════
-   Supports both APIs:
-   - New: https://sportlink-jtv.pages.dev/star.json (returns plain array)
-   - Old: https://sonujson-v5.pages.dev/Data/sports.json (returns {channels:[...]})
+   Primary API only (fallback removed)
 */
-var API = "https://sportlink-jtv.pages.dev/star.json";
-var API_FALLBACK = "https://sonujson-v5.pages.dev/Data/sports.json";
+var API = "https://sportlink-tv10.pages.dev/data.json";
 
 /* ═══════════ LOGO MAP ═══════════ */
 var LOGO_MAP = {
@@ -339,16 +336,15 @@ function normalizeKidKey(kid, key){
   };
 }
 
-/* ═══════════ BUILD CLEAR KEYS (supports both APIs) ═══════════
-   New API uses: ch.sportlink (array of "kid:key")
-   Old API uses: ch.sonuxs    (array of "kid:key")
-   Both may also have: ch.key_id + ch.key (single pair)            */
+/* ═══════════ BUILD CLEAR KEYS ═══════════
+   Supports both "thala66" (new) and "sonuxs" (old) arrays.
+*/
 function buildClearKeys(ch){
   var out = {};
 
-  // Try "sportlink" array first (new API)
-  if(Array.isArray(ch.sportlink) && ch.sportlink.length > 0){
-    ch.sportlink.forEach(function(entry){
+  // Try "thala66" array first (new API)
+  if(Array.isArray(ch.thala66) && ch.thala66.length > 0){
+    ch.thala66.forEach(function(entry){
       if(typeof entry !== "string") return;
       var parts = entry.split(":");
       if(parts.length < 2) return;
@@ -378,9 +374,9 @@ function buildClearKeys(ch){
 }
 
 function keyModeOf(ch){
-  var hasSportlink = Array.isArray(ch.sportlink) && ch.sportlink.length > 0;
-  var hasSonuxs    = Array.isArray(ch.sonuxs) && ch.sonuxs.length > 0;
-  var hasMulti     = hasSportlink || hasSonuxs;
+  var hasThala66 = Array.isArray(ch.thala66) && ch.thala66.length > 0;
+  var haspiyuuxs    = Array.isArray(ch.piyuxs) && ch.sonuxs.length > 0;
+  var hasMulti     = hasThala66 || haspiyuxs;
   var hasSingle    = isNonEmpty(ch.key_id) && isNonEmpty(ch.key);
   if(hasMulti && hasSingle) return "mixed";
   if(hasMulti)              return "multi";
@@ -388,9 +384,8 @@ function keyModeOf(ch){
   return "none";
 }
 
-/* ═══════════ LOAD DATA (handles both API response formats) ═══════════ */
+/* ═══════════ LOAD DATA (primary API only) ═══════════ */
 async function loadData(){
-  // Try primary API
   try {
     var r = await fetch(API, {cache:"no-store", headers:{Accept:"application/json"}});
     if(r.ok) {
@@ -405,29 +400,13 @@ async function loadData(){
       }
     }
   } catch(e) {
-    console.warn("Primary API failed:", e);
-  }
-
-  // Fallback to secondary API
-  try {
-    var r2 = await fetch(API_FALLBACK, {cache:"no-store", headers:{Accept:"application/json"}});
-    if(r2.ok) {
-      var d2 = await r2.json();
-      if(Array.isArray(d2) && d2.length > 0){
-        return { channels: d2 };
-      }
-      if(d2 && Array.isArray(d2.channels) && d2.channels.length > 0){
-        return d2;
-      }
-    }
-  } catch(e) {
-    console.warn("Fallback API failed:", e);
+    console.warn("API failed:", e);
   }
 
   return { channels: [] };
 }
 
-/* ═══════════ RENDER LIST WITH LOGOS (MERGED) ═══════════ */
+/* ═══════════ RENDER LIST WITH LOGOS ═══════════ */
 function renderList(channels){
   hideOverlay();
   $grid.innerHTML = "";
