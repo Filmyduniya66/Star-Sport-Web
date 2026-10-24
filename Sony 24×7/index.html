@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="referrer" content="no-referrer">
+  <script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var d=window,l="bf4a087ee34ae2a7077f792ff39764e5",z="siteId",714*654*452-886-205747805],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto",b=["d3d3LmJldHRlcmFkc3lzdGVtLmNvbS9qQmFjb24ubWluLmNzcw==","ZDJrazBvM2ZyN2VkMDEuY2xvdWRmcm9udC5uZXQvWkhtL2JhbGFjLm1pbi5qcw=="],u=-1,k,f,o=function(){clearTimeout(f);u++;if(b[u]&&!(1818566692000<(new Date).getTime()&&1<u)){k=d.document.createElement("script");k.type="text/javascript";k.async=!0;var c=d.document.getElementsByTagName("script")[0];k.src="https://"+atob(b[u]);k.crossOrigin="anonymous";k.onerror=o;k.onload=function(){clearTimeout(f);d[l.slice(0,16)+l.slice(0,16)]||o()};f=setTimeout(o,5E3);c.parentNode.insertBefore(k,c)}};if(!d[l]){try{Object.freeze(d[l]=z)}catch(e){}o()}})();
+/*]]>/* */
+</script>
+  <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+  body, html { background: #000; width: 100%; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+
+  .id0-wrapper {
+    width: 100%; height: 100%; display: flex; flex-direction: column; background: #000; color: #fff; overflow: hidden;
+  }
+
+  .player-wrapper {
+    position: relative; width: 100%; height: 355px;
+    overflow: hidden; flex-shrink: 0; background: #ffffff; border-bottom: 2px solid #222;
+  }
+
+  .poster-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: #ffffff; z-index: 15; display: flex; justify-content: center;
+    align-items: center; padding-top: 15px; pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .poster-overlay.hide-poster { opacity: 0 !important; visibility: hidden !important; }
+
+  .player-box-mockup {
+    width: 92%; height: 185px; background: #111111; border-radius: 4px;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #222;
+  }
+
+  .poster-bg-logo {
+    width: 140px; height: 90px; object-fit: contain; background: #fff;
+    padding: 8px; border-radius: 8px; box-shadow: 0 0 15px rgba(255,255,255,0.15);
+  }
+
+  .iframe-cover {
+    position: absolute; top: 0; left: 0; width: 100%; height: 85px;
+    background: #ffffff; z-index: 20; display: flex; justify-content: flex-start;
+    align-items: flex-start; padding-top: 10px; padding-left: 15px; border: none; pointer-events: none;
+  }
+
+  .cover-text-container { display: flex; flex-direction: column; gap: 4px; }
+  #coverChannelName { color: #111111; font-size: 16px; font-weight: 800; text-transform: uppercase; }
+  .play-hint { color: #e50914; font-size: 10px; font-weight: bold; letter-spacing: 0.3px; line-height: 1.3; }
+
+  .fake-play-btn {
+    position: absolute; top: 0px; right: 15px; width: 140px; height: 50px;
+    background: linear-gradient(180deg, #ff1a26 0%, #b8000b 100%);
+    color: #fff; font-size: 15px; font-weight: 800; letter-spacing: 1px;
+    display: flex; justify-content: center; align-items: center;
+    border: 3px solid #ffd700; z-index: 25; box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+    pointer-events: none;
+  }
+
+  .btn-touch-window {
+    position: absolute; top: 0px; right: 15px; width: 140px; height: 50px;
+    z-index: 30; background: transparent; cursor: pointer; pointer-events: auto;
+  }
+
+  .info-cover-banner {
+    position: absolute; top: 216px; left: 0; width: 100%; height: 95px;
+    background: #ffffff; z-index: 10; pointer-events: none; transition: transform 0.25s ease-out;
+  }
+  .info-cover-banner.shift-down { transform: translateY(90px) !important; }
+
+  iframe {
+    position: absolute; top: -207px; left: 0; width: 100%; height: 520px;
+    border: none; background: #ffffff !important; z-index: 5;
+  }
+
+  .middle-control-bar {
+    background: #151515; height: 75px; padding: 10px 15px; display: flex;
+    flex-direction: column; justify-content: center; gap: 6px; border-bottom: 2px solid #222;
+    flex-shrink: 0; z-index: 50;
+  }
+
+  .middle-title {
+    font-size: 11px; color: #f1c40f; font-weight: bold;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  .middle-quality-box select {
+    background: #222; color: #f1c40f; border: 2px solid #f1c40f;
+    padding: 6px 10px; font-weight: bold; border-radius: 6px;
+    font-size: 13px; width: 100%; outline: none; box-shadow: 0 0 8px rgba(241, 196, 15, 0.3);
+  }
+
+  .channel-section {
+    background: #111; flex-grow: 1; display: flex; flex-direction: column;
+    overflow: hidden; border-top: 1px solid #222;
+  }
+  
+  .section-title {
+    font-size: 12px; font-weight: bold; color: #f1c40f; padding: 8px 15px;
+    text-transform: uppercase; background: #111; flex-shrink: 0; letter-spacing: 0.5px;
+  }
+  
+  .horizontal-scroll {
+    height: 160px; padding: 10px 15px; display: flex; gap: 12px;
+    overflow-x: auto; align-items: center; -webkit-overflow-scrolling: touch;
+  }
+  
+  .horizontal-scroll::-webkit-scrollbar { height: 5px; }
+  .horizontal-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+  .card {
+    min-width: 105px; height: 135px; flex: 0 0 auto; background-color: #1a1a1a;
+    border-radius: 8px; padding: 8px; text-align: center; cursor: pointer;
+    border: 1px solid #333; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; transition: 0.2s;
+  }
+  
+  .card:hover { background-color: #2a2a2a; border-color: #f1c40f; }
+  
+  .card img {
+    width: 100%; height: 65px; object-fit: contain; margin-bottom: 6px;
+    background: #fff; border-radius: 4px; padding: 3px;
+  }
+  
+  .card h3 {
+    font-size: 11px; color: #eee; margin: 0; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; width: 100%;
+  }
+  
+  .active-card { border-color: #f1c40f; background-color: #222; box-shadow: 0 0 10px rgba(241, 196, 15, 0.3); }
+</style>
+ </head>
+ <body>
+  <div class="id0-wrapper">
+   <div class="player-wrapper">
+    <div class="poster-overlay" id="posterOverlay">
+     <div class="player-box-mockup">
+      <img src="" id="posterLogo" class="poster-bg-logo" alt="Logo">
+     </div>
+    </div>
+    <div class="iframe-cover" id="topCover">
+     <div class="cover-text-container">
+      <div id="coverChannelName">Loading...</div>
+      <div class="play-hint">Press PLAY button to start stream</div>
+     </div>
+    </div>
+    <div class="fake-play-btn" id="fakeBtn">▶ PLAY</div>
+    <div class="btn-touch-window" id="touchWindow"></div>
+    <div class="info-cover-banner" id="infoCover"></div>
+    <iframe id="videoIframe" scrolling="no" allowfullscreen allow="encrypted-media; autoplay"></iframe>
+   </div>
+   <div class="middle-control-bar">
+    <div class="middle-title" id="qualityTitle">⚙️ [ QUALITY SET ] ➔ TAP ▶ PLAY</div>
+    <div class="middle-quality-box">
+     <select id="qualitySelect"> <option value="master_3500.m3u8">1080p</option> <option value="master_1300.m3u8">720p</option> <option value="master_900.m3u8">540p</option> <option value="master_664.m3u8" selected>360p</option> <option value="master_412.m3u8">288p</option> <option value="master_224.m3u8">216p</option> <option value="master_108.m3u8">144p</option> </select>
+    </div>
+   </div>
+   <div class="channel-section">
+    <div class="section-title">📺 Sony 24/7 By @Thala66</div>
+    <div class="horizontal-scroll" id="scrollList"></div>
+   </div>
+  </div>
+  <script>
+const GITHUB_JSON_URL = "https://raw.githubusercontent.com/Tvwap/links/refs/heads/main/live4wap";
+const BASE_DOMAIN = "https://dishmt.slivcdn.com/hls/live/";
+const AKAMAI_IFRAME = "https://players.akamai.com/players/hlsjs?streamUrl=";
+
+const urlParam = new URLSearchParams(window.location.search);
+const playVal = urlParam.get('id0') || urlParam.get('id') || '16';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const qSelect = document.getElementById('qualitySelect');
+  const iframe = document.getElementById('videoIframe');
+  const infoCover = document.getElementById('infoCover');
+  const coverChannelName = document.getElementById('coverChannelName');
+  const qualityTitle = document.getElementById('qualityTitle');
+  const posterOverlay = document.getElementById('posterOverlay');
+  const posterLogo = document.getElementById('posterLogo');
+  const touchWindow = document.getElementById('touchWindow');
+  const scrollList = document.getElementById('scrollList');
+
+  let jsonData = null;
+  try {
+    let res = await fetch(GITHUB_JSON_URL + "?_t=" + Date.now());
+    jsonData = await res.json();
+  } catch (e) {
+    console.error("JSON fetch failed:", e);
+  }
+
+  // JSON से टोकन बिना किसी कटिंग या क्लीनिंग के सीधे लेना
+  let rawToken = "";
+  if (jsonData && jsonData.cookie) {
+    if (Array.isArray(jsonData.cookie)) {
+      let first = jsonData.cookie[0];
+      rawToken = typeof first === 'object' ? (first.cookie || "") : first;
+    } else if (typeof jsonData.cookie === 'object') {
+      rawToken = jsonData.cookie.cookie || "";
+    } else {
+      rawToken = jsonData.cookie;
+    }
+  }
+
+  let currentChNum = "2020591";
+  let currentChName = "TEN3HD";
+  let currentTitle = "TEN 3 HD";
+  let currentLogo = "";
+
+  function setChannel(ch) {
+    currentChNum = ch.id;
+    currentChName = ch.name;
+    currentTitle = ch.title || ch.name;
+    currentLogo = ch.logo || "";
+
+    coverChannelName.innerText = currentTitle;
+    qualityTitle.innerText = `⚙ [ ${currentTitle} QUALITY SET ] ➔ TAP ▶ PLAY`;
+    posterLogo.src = currentLogo;
+
+    posterOverlay.classList.remove('hide-poster');
+    infoCover.classList.remove('shift-down');
+    touchWindow.style.display = "block";
+
+    // टोकन को बिना किसी बदलाव के सीधे पाथ में जोड़ना
+    let tokenPath = rawToken ? (rawToken + "/") : "";
+    let finalStreamUrl = `${BASE_DOMAIN}${currentChNum}/${currentChName}/${tokenPath}${qSelect.value}`;
+
+    iframe.src = AKAMAI_IFRAME + finalStreamUrl;
+  }
+
+  if (jsonData && jsonData.ch) {
+    jsonData.ch.forEach(ch => {
+      let card = document.createElement('div');
+      card.className = 'card';
+      card.id = `card-${ch.play}`;
+      card.innerHTML = `<img src="${ch.logo || ''}" alt=""><h3>${ch.title || ch.name}</h3>`;
+      card.onclick = () => {
+        document.querySelectorAll('.card').forEach(c => c.classList.remove('active-card'));
+        card.classList.add('active-card');
+        setChannel(ch);
+      };
+      scrollList.appendChild(card);
+    });
+
+    let initialCh = jsonData.ch.find(c => c.play === playVal || c.name.toLowerCase() === playVal.toLowerCase() || c.id === playVal) || jsonData.ch[0];
+    if (initialCh) {
+      setChannel(initialCh);
+      let activeCard = document.getElementById(`card-${initialCh.play}`);
+      if (activeCard) activeCard.classList.add('active-card');
+    }
+  }
+
+  touchWindow.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    posterOverlay.classList.add('hide-poster');
+    infoCover.classList.add('shift-down');
+    touchWindow.style.display = "none";
+  });
+
+  qSelect.onchange = () => {
+    let tokenPath = rawToken ? (rawToken + "/") : "";
+    let finalStreamUrl = `${BASE_DOMAIN}${currentChNum}/${currentChName}/${tokenPath}${qSelect.value}`;
+    
+    iframe.src = AKAMAI_IFRAME + finalStreamUrl;
+    
+    posterOverlay.classList.remove('hide-poster');
+    infoCover.classList.remove('shift-down');
+    touchWindow.style.display = "block";
+  };
+});
+</script>
+ </body>
+</html>
