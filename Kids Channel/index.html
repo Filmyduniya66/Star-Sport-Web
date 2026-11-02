@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <title>Kids By @Thala66</title>
+  <meta name="referrer" content="no-referrer">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://manifest.fastly.net">
+  <link rel="preconnect" href="https://livepeercdn.studio">
+  <link rel="preconnect" href="https://d2zihajmogu5jn.cloudfront.net">
+  <link rel="preconnect" href="https://cph-p2p-msl.akamaized.net">
+  <link rel="dns-prefetch" href="https://speedsters-proxy.knvh02v9pi6dct.workers.dev">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/controls.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.16.3/shaka-player.ui.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="bff6007c-ed56-49bc-9843-9cd42c50bab5"></script>
+  <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+
+        .shaka-video-container { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; }
+        video { width: 100%; height: 100%; background: #000; object-fit: contain; }
+        video.ratio-fit { object-fit: contain; }
+        video.ratio-stretch { object-fit: fill; }
+        video.ratio-full { object-fit: cover; }
+
+        .shaka-overflow-menu-button { color: white !important; }
+        .shaka-controls-button-panel { margin-bottom: 2px !important; }
+        .shaka-video-container button { color: white !important; }
+        .shaka-video-container .material-icons-round { color: white !important; }
+        .shaka-spinner, shaka-spinner, .shaka-video-container shaka-spinner { display: none !important; }
+        .shaka-loading-spinner, .shaka-loader, .shaka-busy-container { display: none !important; }
+
+        .wm { position: absolute; right: 15px; color: #f7f7f7; font-weight: bold; z-index: 10; pointer-events: none; font-size: 14px; }
+
+        #channelInfo {
+            position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.7);
+            color: #fff; padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: bold;
+            z-index: 40; display: none; max-width: 280px; pointer-events: auto; cursor: pointer;
+        }
+
+        #errorOverlay {
+            position: fixed; inset: 0; z-index: 100;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.9); color: white; text-align: center; padding: 20px;
+        }
+        #errorOverlay.visible { display: flex; }
+        #errorOverlay .error-msg { font-size: 16px; font-weight: bold; margin-bottom: 12px; }
+        #errorOverlay .error-detail { font-size: 12px; color: #aaa; margin-bottom: 20px; max-width: 90vw; word-break: break-all; }
+        #errorOverlay .retry-btn {
+            background: #e53e3e; color: white; border: none; padding: 12px 28px;
+            border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; margin: 6px;
+        }
+        #errorOverlay .browse-btn {
+            background: #444; color: white; border: none; padding: 12px 28px;
+            border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; margin: 6px;
+        }
+
+        #loadingOverlay {
+            position: fixed; inset: 0; z-index: 90;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: #000; color: white; transition: opacity 0.3s;
+        }
+        #loadingOverlay.hidden { opacity: 0; pointer-events: none; }
+        #loadingOverlay .spinner { width: 40px; height: 40px; border: 3px solid #333; border-top-color: #e53e3e; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loadingOverlay .status { font-size: 14px; font-weight: bold; }
+
+        #channelListOverlay {
+            position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.95);
+            display: none; flex-direction: column; overflow: hidden;
+        }
+        #channelListOverlay.visible { display: flex; }
+        #channelListOverlay .header { display: flex; align-items: center; padding: 12px; gap: 10px; border-bottom: 1px solid #333; }
+        #channelListOverlay .header input {
+            flex: 1; background: #222; border: 1px solid #444; color: white;
+            padding: 8px 12px; border-radius: 6px; font-size: 14px; outline: none;
+        }
+        #channelListOverlay .header button {
+            background: #e53e3e; color: white; border: none; padding: 8px 16px;
+            border-radius: 6px; font-size: 14px; cursor: pointer;
+        }
+        #channelListOverlay .channels { flex: 1; overflow-y: auto; padding: 8px; }
+        .cat-tabs { display: flex; gap: 6px; padding: 8px 12px; border-bottom: 1px solid #333; overflow-x: auto; }
+        .cat-tab {
+            background: #222; color: #aaa; border: none; padding: 6px 14px;
+            border-radius: 16px; font-size: 12px; font-weight: bold; cursor: pointer;
+            white-space: nowrap; transition: all 0.2s;
+        }
+        .cat-tab.active { background: #e53e3e; color: white; }
+        .cat-tab:hover { background: #333; }
+        .cat-tab.active:hover { background: #c53030; }
+        #channelListOverlay .ch-section {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 12px 6px; color: #e53e3e; font-size: 13px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        #channelListOverlay .ch-section:first-child { padding-top: 4px; }
+        #channelListOverlay .ch-section .ch-section-count { color: #666; font-size: 11px; font-weight: 500; }
+        #channelListOverlay .ch-item {
+            display: flex; align-items: center; gap: 10px; padding: 10px;
+            border-radius: 8px; cursor: pointer; transition: background 0.2s;
+        }
+        #channelListOverlay .ch-item:hover { background: #222; }
+        #channelListOverlay .ch-item img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+        #channelListOverlay .ch-item .ch-name { font-size: 14px; color: white; font-weight: 500; }
+        #channelListOverlay .ch-item .ch-type { font-size: 11px; color: #888; }
+
+        .btn-bar {
+            position: absolute; top: 10px; right: 8px; z-index: 50;
+            display: flex; flex-direction: row; gap: 5px; align-items: center;
+            transition: opacity 0.3s; pointer-events: auto;
+        }
+        .btn-bar.hidden { opacity: 0; pointer-events: none; }
+        .bar-btn {
+            background: rgba(229,62,62,0.9); color: white; border: none; border-radius: 6px;
+            padding: 5px 10px; font-size: 12px; cursor: pointer; white-space: nowrap;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: transform 0.2s;
+        }
+        .bar-btn:active { transform: scale(0.95); }
+    </style>
+ </head>
+ <body>
+  <div class="wm" style="top: 50px; font-size: 14px;">@Thala66</div>
+  <div class="wm" style="top: 70px; font-size: 13px;">Click NS Player - Lag Free</div>
+  <div id="channelInfo" onclick="showChannelList()">
+   <div style="display: flex; align-items: center; gap: 8px;">
+    <img id="channelLogo" src="" style="width: 28px; height: 28px; border-radius: 4px; object-fit: cover; display: none;"> <span id="channelName">Loading...</span>
+   </div>
+  </div>
+  <div class="shaka-video-container shaka-mobile" data-shaka-player-container="" shaka-controls="true">
+   <div class="shaka-video-container shaka-video" data-shaka-controls="" data-shaka-player="">
+    <div style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+     <video autoplay class="ratio-fit" crossorigin="anonymous" data-shaka-player="" id="video" playsinline></video>
+    </div>
+   </div>
+  </div>
+  <div id="loadingOverlay">
+   <div class="spinner"></div>
+   <div class="status" id="statusText">Loading...</div>
+  </div>
+  <div id="errorOverlay">
+   <div class="error-msg" id="errorMsg">Stream Error</div>
+   <div class="error-detail" id="errorDetail"></div>
+   <div>
+    <button class="retry-btn" onclick="retryLoad()">Tap to Retry</button>
+    <button class="browse-btn" onclick="hideError();showChannelList()">Browse Channels</button>
+   </div>
+  </div>
+  <div id="channelListOverlay">
+   <div class="header">
+    <input id="channelSearch" type="text" placeholder="Search channels..." oninput="filterChannels()"> <span id="chTotal" style="color:#888;font-size:12px;white-space:nowrap;"></span>
+    <button onclick="hideChannelList()">Close</button>
+   </div>
+   <div class="cat-tabs" id="catTabs"></div>
+   <div class="channels" id="channelListContainer"></div>
+  </div>
+  <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var CHANNELS_JSON_URL = urlParams.get('channels') || "https://pastefy.app/huceCKMY/raw";
+        var channelList = [];
+        var STREAM_CONFIG = null;
+        var player = null;
+        var lastTap = 0;
+        var _loading = false;
+
+        function base64UrlToHex(b64) {
+            if (!b64) return '';
+            var base64 = b64.replace(/-/g, '+').replace(/_/g, '/');
+            while (base64.length % 4) base64 += '=';
+            try { return Array.from(atob(base64), function(c) { return c.charCodeAt(0).toString(16).padStart(2, '0'); }).join(''); } catch (e) { return ''; }
+        }
+
+        function isHex(str) { return /^[0-9a-fA-F]+$/.test(str) && str.length % 2 === 0; }
+
+        function toHex(str) {
+            if (!str) return '';
+            if (isHex(str)) return str.toLowerCase();
+            var h = base64UrlToHex(str);
+            return h || str;
+        }
+
+        function setStatus(msg) { var el = document.getElementById('statusText'); if (el) el.innerText = msg; }
+
+        function hideLoading() { document.getElementById('loadingOverlay').classList.add('hidden'); _loading = false; }
+
+        function showError(title, detail) {
+            document.getElementById('errorMsg').innerText = title || 'Stream Error';
+            document.getElementById('errorDetail').innerText = detail || '';
+            document.getElementById('errorOverlay').classList.add('visible');
+        }
+
+        function hideError() { document.getElementById('errorOverlay').classList.remove('visible'); }
+
+        function setChannelInfo() {
+            var name = STREAM_CONFIG.name || STREAM_CONFIG.channel_name || STREAM_CONFIG.title || 'Live Stream';
+            document.getElementById('channelName').innerText = name;
+            document.title = name + " - BrowserPlay PLUS";
+            var logo = document.getElementById('channelLogo');
+            if (STREAM_CONFIG.logo) { logo.src = STREAM_CONFIG.logo; logo.style.display = 'block'; } else { logo.style.display = 'none'; }
+        }
+
+        async function toggleFS() {
+            var c = document.querySelector('.shaka-video-container');
+            try {
+                if (!document.fullscreenElement && !document.webkitIsFullScreen) {
+                    if (c.requestFullscreen) await c.requestFullscreen();
+                    else if (c.webkitRequestFullscreen) await c.webkitRequestFullscreen();
+                } else {
+                    if (document.exitFullscreen) await document.exitFullscreen();
+                    else if (document.webkitExitFullscreen) await document.webkitExitFullscreen();
+                }
+            } catch (e) {}
+        }
+
+        document.addEventListener("fullscreenchange", function() {
+            if (document.fullscreenElement) {
+                if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(function(){});
+            } else {
+                if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+            }
+        });
+
+        document.querySelector(".shaka-video-container").addEventListener("dblclick", function(e) {
+            if (e.target.tagName !== "BUTTON" && !e.target.classList.contains("shaka-range-container")) toggleFS();
+        });
+
+        document.querySelector(".shaka-video-container").addEventListener("touchstart", function(e) {
+            var now = Date.now();
+            if (now - lastTap < 300) { e.preventDefault(); toggleFS(); }
+            lastTap = now;
+        }, { passive: false });
+
+        document.addEventListener("contextmenu", function(e) { e.preventDefault(); });
+
+        var currentCategory = 'all';
+
+        var TAB_LABELS = { 'mpd': 'MPD', 'vercel': 'Vercel' };
+
+        function buildTabs() {
+            var tabsEl = document.getElementById('catTabs');
+            tabsEl.innerHTML = '';
+
+            // Count channels per type so empty tabs are never rendered
+            var counts = {};
+            channelList.forEach(function(ch) {
+                var type = (ch.type || 'm3u8').toLowerCase();
+                counts[type] = (counts[type] || 0) + 1;
+            });
+
+            function mkTab(cat, label, active) {
+                var b = document.createElement('button');
+                b.className = 'cat-tab' + (active ? ' active' : '');
+                b.textContent = label;
+                b.addEventListener('click', function() { setCategory(cat, b); });
+                tabsEl.appendChild(b);
+            }
+
+            mkTab('all', 'All (' + channelList.length + ')', currentCategory === 'all');
+
+            // Only add tabs for types that have channels
+            Object.keys(TAB_LABELS).forEach(function(type) {
+                if (counts[type]) {
+                    mkTab(type, TAB_LABELS[type] + ' (' + counts[type] + ')', currentCategory === type);
+                }
+            });
+        }
+
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-tab').forEach(function(t) { t.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+            filterChannels();
+        }
+
+        function showChannelList() {
+            document.getElementById('channelListOverlay').classList.add('visible');
+            document.getElementById('chTotal').innerText = channelList.length + ' channels';
+            filterChannels();
+        }
+
+        function filterChannels() {
+            var container = document.getElementById('channelListContainer');
+            container.innerHTML = '';
+            var search = (document.getElementById('channelSearch').value || '').toLowerCase();
+
+            var sections = {};
+            channelList.forEach(function(ch) {
+                var name = (ch.name || ch.channel_name || '').toLowerCase();
+                var id = (ch.id || ch.channel_id || '').toLowerCase();
+                var type = (ch.type || 'm3u8').toLowerCase();
+
+                if (search && !name.includes(search) && !id.includes(search)) return;
+                if (currentCategory !== 'all' && type !== currentCategory) return;
+
+                var cat = ch.category || 'Other';
+                if (!sections[cat]) sections[cat] = [];
+                sections[cat].push(ch);
+            });
+
+            Object.keys(sections).forEach(function(cat) {
+                var sec = document.createElement('div');
+                sec.className = 'ch-section';
+                var secLabel = document.createElement('span');
+                secLabel.textContent = cat;
+                var secCount = document.createElement('span');
+                secCount.className = 'ch-section-count';
+                secCount.textContent = sections[cat].length;
+                sec.appendChild(secLabel);
+                sec.appendChild(secCount);
+                container.appendChild(sec);
+
+                sections[cat].forEach(function(ch) {
+                    var type = (ch.type || 'm3u8').toLowerCase();
+                    var div = document.createElement('div');
+                    div.className = 'ch-item';
+                    div.innerHTML = '<img src="' + (ch.logo || 'https://i.postimg.cc/0NYVSnkr/Gemini-Generated-Image-ykkw2cykkw2cykkw.png') + '" onerror="this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23333%22 width=%2240%22 height=%2240%22/><text x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2214%22>📺</text></svg>\'"><div><div class="ch-name">' + (ch.name || ch.channel_name || 'Unknown') + '</div><div class="ch-type">' + type.toUpperCase() + ((ch.keyId || ch.key) ? ' 🔒' : '') + '</div></div>';
+                    div.addEventListener('click', function() {
+                        hideChannelList();
+                        window.location.search = '?id=' + encodeURIComponent(ch.id || ch.channel_id);
+                    });
+                    container.appendChild(div);
+                });
+            });
+
+            if (container.children.length === 0) {
+                container.innerHTML = '<div style="text-align:center;color:#888;padding:40px;">No channels found</div>';
+            }
+        }
+
+        function hideChannelList() { document.getElementById('channelListOverlay').classList.remove('visible'); }
+
+        function slugify(str) {
+            return String(str || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+
+        function stripPipeParams(raw) {
+            // Strip |referer= / |user-agent= style suffixes from playlist URLs
+            if (!raw) return raw || '';
+            var idx = raw.indexOf('|');
+            if (idx === -1) return raw;
+            return raw.substring(0, idx);
+        }
+
+        function normalizeItem(item, groupType) {
+            var url = stripPipeParams(item.url || item.channel_url || item.streamUrl || item.stream_url || item.file || '');
+            var lower = url.toLowerCase();
+            var type = groupType;
+            if (!type) {
+                if (lower.includes('.m3u8')) type = 'm3u8';
+                else type = 'mpd';
+            }
+
+            var name = item.name || item.channel_name || item.title || 'Unknown';
+            var id = item.id || item.channel_id || slugify(name);
+
+            var rawKId = item.k1 || item.keyId || '';
+            var rawK = item.k2 || item.key || '';
+            var keys = [];
+
+            if (rawKId && rawK) {
+                keys.push({ keyId: toHex(rawKId), key: toHex(rawK) });
+            }
+
+            if (keys.length === 0 && rawK && rawK.includes(':') && !rawK.startsWith('{')) {
+                var parts = rawK.split(':');
+                keys.push({ keyId: toHex(parts[0]), key: toHex(parts.slice(1).join(':')) });
+            }
+
+            if (keys.length === 0 && rawK && rawK.startsWith('{')) {
+                try {
+                    var jk = JSON.parse(rawK);
+                    if (jk.keys) {
+                        keys = jk.keys.map(function(k) { return { keyId: base64UrlToHex(k.kid), key: base64UrlToHex(k.k) }; });
+                    }
+                } catch (e) {}
+            }
+
+            return {
+                id: id,
+                channel_id: item.channel_id || item.id || id,
+                name: name,
+                channel_name: item.channel_name || item.name || name,
+                url: url,
+                logo: item.channel_logo || item.logo || item.poster || '',
+                category: item.category || item.group || '',
+                keyId: keys.length > 0 ? keys[0].keyId : '',
+                key: keys.length > 0 ? keys[0].key : '',
+                allKeys: keys,
+                bearer: item.Bearer || item.bearer || '',
+                type: type
+            };
+        }
+
+        function parseChannelJson(json) {
+            // Handle flat array format: [{id, name, url, k1, k2, Bearer}, ...]
+            if (Array.isArray(json)) {
+                var list = [];
+                var seenIds = {};
+                for (var i = 0; i < json.length; i++) {
+                    var item = json[i];
+                    if (!item.url && !item.file) continue;
+                    var norm = normalizeItem(item, null);
+                    // Skip entries with non-http URLs (e.g. worker-relative paths that can't resolve locally)
+                    if (!/^https?:\/\//i.test(norm.url)) continue;
+                    // Disambiguate duplicate titles so each channel deep-links uniquely
+                    var baseId = norm.id;
+                    var n = 1;
+                    while (seenIds[norm.id]) {
+                        n++;
+                        norm.id = baseId + '-' + n;
+                        norm.channel_id = norm.id;
+                    }
+                    seenIds[norm.id] = true;
+                    list.push(norm);
+                }
+                var blocked = ['unite8-sports-1-hd', 'unite8-sports-2-hd'];
+                list = list.filter(function(c) { return !blocked.includes(String(c.id || c.channel_id)); });
+                var nameOverrides = { 'zee-eng': 'English', 'zee-hindi': 'Hindi', 'zee-english': 'English' };
+                list.forEach(function(c) {
+                    var cid = String(c.id || c.channel_id || '').toLowerCase();
+                    if (nameOverrides[cid]) {
+                        c.name = nameOverrides[cid];
+                        c.channel_name = nameOverrides[cid];
+                    }
+                });
+                return list;
+            }
+
+            var list = [];
+            for (var key in json) {
+                if (!json.hasOwnProperty(key)) continue;
+                var arr = json[key];
+                if (!Array.isArray(arr)) continue;
+
+                var groupType = null;
+                var kl = key.toLowerCase();
+                if (kl === 'vercel') groupType = 'vercel';
+                else if (kl.includes('m3u8') || kl.includes('ios')) groupType = 'm3u8';
+                else if (kl.includes('mpd') || kl.includes('dash')) groupType = 'mpd';
+
+                for (var i = 0; i < arr.length; i++) {
+                    var item = arr[i];
+                    if (!item.url && !item.channel_url && !item.streamUrl && !item.stream_url && !item.file) continue;
+                    list.push(normalizeItem(item, groupType));
+                }
+            }
+
+            // Handle sourceC-style nested objects: { success, status, data: { chKey: { mpd, keys } } }
+            for (var key in json) {
+                if (!json.hasOwnProperty(key)) continue;
+                var val = json[key];
+                if (!val || typeof val !== 'object' || Array.isArray(val)) continue;
+                var data = val.data;
+                if (!data || typeof data !== 'object') continue;
+                for (var chKey in data) {
+                    if (!data.hasOwnProperty(chKey)) continue;
+                    var ch = data[chKey];
+                    if (!ch.mpd && !ch.url) continue;
+                    var keys = [];
+                    if (ch.keys && typeof ch.keys === 'object') {
+                        for (var kid in ch.keys) {
+                            if (ch.keys.hasOwnProperty(kid) && kid && kid !== '0' && ch.keys[kid] && ch.keys[kid] !== '0') {
+                                keys.push({ keyId: kid, key: ch.keys[kid] });
+                            }
+                        }
+                    }
+                    list.push({
+                        id: chKey,
+                        channel_id: chKey,
+                        name: ch.name || chKey,
+                        channel_name: ch.name || chKey,
+                        url: ch.mpd || ch.url,
+                        logo: ch.logo || '',
+                        keyId: keys.length > 0 ? keys[0].keyId : '',
+                        key: keys.length > 0 ? keys[0].key : '',
+                        allKeys: keys,
+                        bearer: ch.Bearer || ch.bearer || '',
+                        type: 'mpd'
+                    });
+                }
+            }
+
+            var blocked = ['unite8-sports-1-hd', 'unite8-sports-2-hd'];
+            list = list.filter(function(c) { return !blocked.includes(String(c.id || c.channel_id)); });
+
+            var nameOverrides = { 'zee-eng': 'English', 'zee-hindi': 'Hindi', 'zee-english': 'English' };
+            list.forEach(function(c) {
+                var cid = String(c.id || c.channel_id || '').toLowerCase();
+                if (nameOverrides[cid]) {
+                    c.name = nameOverrides[cid];
+                    c.channel_name = nameOverrides[cid];
+                }
+            });
+
+            return list;
+        }
+
+        var DEFAULT_CHANNEL_ID = 'mr-bean-animated-browserplay';
+
+        function findChannel(list) {
+            var targetId = urlParams.get('id') || DEFAULT_CHANNEL_ID;
+
+            var tl = targetId.toLowerCase();
+            function byId(c) { return String(c.id || c.channel_id || '').toLowerCase(); }
+            function byName(c) { return String(c.name || c.channel_name || '').toLowerCase(); }
+
+            for (var i = 0; i < list.length; i++) {
+                if (byId(list[i]) === tl) return list[i];
+            }
+            for (var i = 0; i < list.length; i++) {
+                if (byId(list[i]).startsWith(tl)) return list[i];
+            }
+            for (var i = 0; i < list.length; i++) {
+                if (byId(list[i]).includes(tl) || byName(list[i]).includes(tl)) return list[i];
+            }
+            return null;
+        }
+
+        async function fetchFromNetwork() {
+            var res = await fetch(CHANNELS_JSON_URL + "?t=" + Date.now(), { cache: 'no-store' });
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            var json = await res.json();
+            return parseChannelJson(json);
+        }
+
+        async function fetchConfig() {
+            setStatus("Loading channel...");
+            try {
+                channelList = await fetchFromNetwork();
+                return findChannel(channelList);
+            } catch (e) {
+                console.error("Fetch error:", e);
+                return null;
+            }
+        }
+
+        function buildClearKeys(channel) {
+            var keys = channel.allKeys && channel.allKeys.length > 0 ? channel.allKeys : [];
+            if (keys.length === 0 && channel.keyId && channel.key) {
+                keys.push({ keyId: channel.keyId, key: channel.key });
+            }
+            if (keys.length === 0) return {};
+            var ck = {};
+            for (var i = 0; i < keys.length; i++) {
+                if (keys[i].keyId && keys[i].key) ck[keys[i].keyId] = keys[i].key;
+            }
+            return ck;
+        }
+
+        var _requestFilterRegistered = false;
+
+        async function tryLoadWithRetry(url, clearKeys, attempt) {
+            var maxAttempts = 3;
+            _loading = true;
+            setStatus("Loading stream... (attempt " + attempt + "/" + maxAttempts + ")");
+            hideError();
+
+            var hasKeys = clearKeys && Object.keys(clearKeys).length > 0;
+            try {
+                if (hasKeys) {
+                    player.configure({
+                        drm: {
+                            clearKeys: clearKeys,
+                            preferredKeySystems: ['org.w3.clearkey']
+                        }
+                    });
+                } else {
+                    player.configure({
+                        drm: { clearKeys: undefined }
+                    });
+                }
+            } catch (e) {}
+
+            var bearer = STREAM_CONFIG.bearer || '';
+
+            if (!_requestFilterRegistered) {
+                try {
+                    var ne = player.getNetworkingEngine();
+                    if (ne) {
+                        ne.registerRequestFilter(function(type, request) {
+                            try {
+                                if (bearer) request.headers['Authorization'] = 'Bearer ' + bearer;
+                            } catch (e) {}
+                        });
+                        _requestFilterRegistered = true;
+                    }
+                } catch (e) {}
+            }
+
+            try {
+                await player.load(url);
+                _loading = false;
+                hideLoading();
+                hideError();
+                document.getElementById('channelInfo').style.display = 'block';
+                setChannelInfo();
+                document.getElementById('video').play().catch(function(){});
+                return true;
+            } catch (err) {
+                console.error("Load attempt " + attempt + " failed:", err);
+                if (attempt < maxAttempts && err.code === 6012) {
+                    setStatus("DRM retry... (" + attempt + "/" + maxAttempts + ")");
+                    await new Promise(function(r) { setTimeout(r, 1500); });
+                    return tryLoadWithRetry(url, clearKeys, attempt + 1);
+                }
+                _loading = false;
+                throw err;
+            }
+        }
+
+        function retryLoad() {
+            hideError();
+            if (STREAM_CONFIG) loadStream(STREAM_CONFIG);
+        }
+
+        var _handlingError = false;
+
+        async function loadStream(config) {
+            STREAM_CONFIG = config;
+            _handlingError = false;
+            _requestFilterRegistered = false;
+            var video = document.getElementById("video");
+            if (player) { player.destroy(); player = null; }
+
+            player = new shaka.Player(video);
+            var ui = new shaka.ui.Overlay(player, document.querySelector(".shaka-video-container"), video);
+            ui.configure({
+                addBigPlayButton: true,
+                controlPanelElements: ["time_and_duration", "spacer", "mute", "volume", "language", "picture_in_picture", "quality", "fullscreen"]
+            });
+
+            player.configure({
+                abr: {
+                    enabled: true,
+                    defaultBandwidthEstimate: 1500000,
+                    switchInterval: 1,
+                    bandwidthUpgradeTarget: 0.9,
+                    bandwidthDowngradeTarget: 0.8
+                },
+                streaming: {
+                    rebufferingGoal: 3,
+                    bufferingGoal: 15,
+                    updateIntervalSeconds: 0.5,
+                    stallEnabled: true,
+                    stallThreshold: 0.5,
+                    jumpLargeGaps: true,
+                    gapDetectionThreshold: 0.5,
+                    seekBackToLivePosition: true,
+                    retryParameters: {
+                        timeout: 10000,
+                        maxAttempts: 3,
+                        baseDelay: 500,
+                        backoffFactor: 2,
+                        fuzzFactor: 0.5,
+                        stallTimeout: 5000
+                    }
+                },
+                mediaSource: {
+                    forceTransmuxTS: true
+                }
+            });
+
+            player.addEventListener('error', function(event) {
+                if (_loading || _handlingError) return;
+                _handlingError = true;
+                var err = event.detail;
+                console.error('Shaka Error:', err);
+                hideLoading();
+                showError("Error " + (err.code || 0), err.message || 'Unknown error');
+            });
+
+            var clearKeys = buildClearKeys(config);
+            try {
+                await tryLoadWithRetry(config.url, clearKeys, 1);
+            } catch (err) {
+                _handlingError = true;
+                hideLoading();
+                showError("Stream Error", err.message || 'Failed to load stream');
+            }
+
+            setupButtons(config);
+        }
+
+        function setupButtons(config) {
+            const existing = document.querySelector('.btn-bar');
+            if (existing) existing.remove();
+
+            const btnBar = document.createElement('div');
+            btnBar.className = 'btn-bar';
+            document.querySelector('.shaka-video-container').appendChild(btnBar);
+
+            const mkBtn = (icon, label, onClick) => {
+                const b = document.createElement('button');
+                b.className = 'bar-btn';
+                b.innerHTML = `<i class="fas ${icon}"></i> ${label}`;
+                b.addEventListener('click', onClick);
+                btnBar.appendChild(b);
+                return b;
+            };
+
+            mkBtn('fa-list', 'Channels', showChannelList);
+            mkBtn('fa-home', '', () => { window.location.href = '/'; });
+
+            mkBtn('fa-external-link-alt', 'NS Player', () => {
+                let url = config.url;
+                let intent = `intent:${url}#Intent;action=android.intent.action.VIEW;type=video/*;package=com.genuine.leone;end.`;
+                if (config.keyId && config.key) {
+                    intent = `intent:${url}?drmScheme=clearkey&drmLicense=${config.keyId}:${config.key}#Intent;action=android.intent.action.VIEW;type=video/*;package=com.genuine.leone;end.`;
+                }
+                window.location.href = intent;
+            });
+
+            const zoomModes = [
+                { label: 'FIT', fit: 'contain' },
+                { label: 'STRETCH', fit: 'fill' },
+                { label: 'FULL', fit: 'cover' }
+            ];
+            let zoomIdx = parseInt(localStorage.getItem('zoomIndex') || '0');
+            if (zoomIdx >= zoomModes.length) zoomIdx = 0;
+            const video = document.getElementById('video');
+            const zoomBtn = mkBtn('fa-search-plus', zoomModes[zoomIdx].label, () => {
+                zoomIdx = (zoomIdx + 1) % zoomModes.length;
+                const m = zoomModes[zoomIdx];
+                video.style.objectFit = m.fit;
+                video.className = video.className.replace(/ratio-\w+/g, '');
+                video.classList.add('ratio-' + m.label.toLowerCase());
+                zoomBtn.innerHTML = `<i class="fas fa-search-plus"></i> ${m.label}`;
+                localStorage.setItem('zoomIndex', zoomIdx);
+            });
+            video.style.objectFit = zoomModes[zoomIdx].fit;
+
+            const volLevels = [100, 200, 300];
+            let volIdx = 0;
+            let audioCtx, gainNode, source;
+            const volBtn = mkBtn('fa-volume-up', '100%', () => {
+                if (!audioCtx) {
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AC();
+                    source = audioCtx.createMediaElementSource(video);
+                    gainNode = audioCtx.createGain();
+                    source.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                }
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                volIdx = (volIdx + 1) % volLevels.length;
+                const lvl = volLevels[volIdx];
+                if (gainNode) gainNode.gain.value = lvl / 100;
+                volBtn.innerHTML = `<i class="fas fa-volume-up"></i> ${lvl}%`;
+            });
+
+            let hideTimer;
+            const show = () => { btnBar.classList.remove('hidden'); clearTimeout(hideTimer); hideTimer = setTimeout(() => btnBar.classList.add('hidden'), 3000); };
+            const container = document.querySelector('.shaka-video-container');
+            container.addEventListener('mousemove', show);
+            container.addEventListener('touchstart', show);
+            container.addEventListener('click', show);
+            show();
+        }
+
+        // ---- Init ----
+        document.addEventListener("DOMContentLoaded", async () => {
+            shaka.polyfill.installAll();
+            if (!shaka.Player.isBrowserSupported()) {
+                setStatus("Browser not supported");
+                return;
+            }
+
+            new MutationObserver(() => {
+                document.querySelectorAll('.shaka-spinner, shaka-spinner').forEach(el => el.style.display = 'none');
+            }).observe(document.body, { childList: true, subtree: true });
+
+            const channel = await fetchConfig();
+
+            if (channelList.length > 0) {
+                buildTabs();
+                document.getElementById('channelInfo').style.display = 'block';
+                document.getElementById('channelName').innerText = `${channelList.length} channels`;
+                document.getElementById('channelLogo').style.display = 'none';
+            }
+
+            if (!channel) {
+                hideLoading();
+                if (channelList.length > 0) {
+                    showChannelList();
+                } else {
+                    showError("No channels", "Failed to load channel list");
+                }
+                return;
+            }
+
+            await loadStream(channel);
+        });
+    </script>
+ </body>
+</html>
