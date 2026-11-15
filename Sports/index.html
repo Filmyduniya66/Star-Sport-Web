@@ -335,14 +335,14 @@ function normalizeKidKey(kid, key){
 }
 
 /* ═══════════ BUILD CLEAR KEYS ═══════════
-   Supports both "thala66" (new) and "sonuxs" (old) arrays.
+   Supports both "sportlink" (new) and "sonuxs" (old) arrays.
 */
 function buildClearKeys(ch){
   var out = {};
 
-  // Try "thala" array first (new API)
-  if(Array.isArray(ch.thala) && ch.thala66.length > 0){
-    ch.thala.forEach(function(entry){
+  // Try "sportlink" array first (new API)
+  if(Array.isArray(ch.sportlink) && ch.sportlink.length > 0){
+    ch.sportlink.forEach(function(entry){
       if(typeof entry !== "string") return;
       var parts = entry.split(":");
       if(parts.length < 2) return;
@@ -372,9 +372,9 @@ function buildClearKeys(ch){
 }
 
 function keyModeOf(ch){
-  var hasThala = Array.isArray(ch.thala) && ch.thala.length > 0;
+  var hasSportlink = Array.isArray(ch.sportlink) && ch.sportlink.length > 0;
   var hasSonuxs    = Array.isArray(ch.sonuxs) && ch.sonuxs.length > 0;
-  var hasMulti     = hasThala66 || hasSonuxs;
+  var hasMulti     = hasSportlink || hasSonuxs;
   var hasSingle    = isNonEmpty(ch.key_id) && isNonEmpty(ch.key);
   if(hasMulti && hasSingle) return "mixed";
   if(hasMulti)              return "multi";
