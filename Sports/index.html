@@ -7,8 +7,6 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Ad Script -->
-  <script src="https://pl31358401.profitableratecpmnetwork.com/a3/81/41/a38141b4ff99f6ef8dbf9dc5f76bd86b.js"></script>
   <link rel="preconnect" href="https://sportlink-jtv.pages.dev">
   <link rel="dns-prefetch" href="https://sportlink-jtv.pages.dev">
   <link rel="preconnect" href="https://www.jiotv.com/">
@@ -342,9 +340,9 @@ function normalizeKidKey(kid, key){
 function buildClearKeys(ch){
   var out = {};
 
-  // Try "thala66" array first (new API)
-  if(Array.isArray(ch.thala66) && ch.thala66.length > 0){
-    ch.thala66.forEach(function(entry){
+  // Try "thala" array first (new API)
+  if(Array.isArray(ch.thala) && ch.thala66.length > 0){
+    ch.thala.forEach(function(entry){
       if(typeof entry !== "string") return;
       var parts = entry.split(":");
       if(parts.length < 2) return;
@@ -374,9 +372,9 @@ function buildClearKeys(ch){
 }
 
 function keyModeOf(ch){
-  var hasThala66 = Array.isArray(ch.thala66) && ch.thala66.length > 0;
-  var haspiyuuxs    = Array.isArray(ch.piyuxs) && ch.sonuxs.length > 0;
-  var hasMulti     = hasThala66 || haspiyuxs;
+  var hasThala = Array.isArray(ch.thala) && ch.thala.length > 0;
+  var hasSonuxs    = Array.isArray(ch.sonuxs) && ch.sonuxs.length > 0;
+  var hasMulti     = hasThala66 || hasSonuxs;
   var hasSingle    = isNonEmpty(ch.key_id) && isNonEmpty(ch.key);
   if(hasMulti && hasSingle) return "mixed";
   if(hasMulti)              return "multi";
@@ -406,10 +404,23 @@ async function loadData(){
   return { channels: [] };
 }
 
-/* ═══════════ RENDER LIST WITH LOGOS ═══════════ */
+/* ═══════════ RENDER LIST WITH LOGOS (ALL CHANNELS) ═══════════ */
 function renderList(channels){
   hideOverlay();
   $grid.innerHTML = "";
+
+  if(!channels || channels.length === 0){
+    var empty = document.createElement("div");
+    empty.style.gridColumn = "1 / -1";
+    empty.style.textAlign = "center";
+    empty.style.color = "#666";
+    empty.style.padding = "40px 20px";
+    empty.style.fontSize = "14px";
+    empty.textContent = "No channels found.";
+    $grid.appendChild(empty);
+    $list.style.display = "flex";
+    return;
+  }
 
   var f = document.createDocumentFragment();
 
@@ -797,8 +808,15 @@ async function main(){
     errMsg("Connection Error. Please Check Your Internet.");
     return;
   }
-  if(!id){ renderList(data.channels); return; }
-  var ch = data.channels.find(function(c){ return c.id === id; });
+
+  // ═══════════ NO FILTER — DISPLAY ALL CHANNELS ═══════════
+  var allChannels = data.channels || [];
+
+  if(!id){ renderList(allChannels); return; }
+
+  // Look up the requested channel across ALL channels
+  var ch = allChannels.find(function(c){ return c.id === id; });
+
   if(!ch){ errMsg("Channel Not Found."); return; }
   document.title = ch.name;
   await startPlayer(ch);
@@ -819,5 +837,6 @@ document.addEventListener("DOMContentLoaded", main);
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&tgOverlay.classList.contains('show'))closePopup();});
 })();
 </script>
+  <script src="https://pl31358401.profitableratecpmnetwork.com/a3/81/41/a38141b4ff99f6ef8dbf9dc5f76bd86b.js"></script>
  </body>
 </html>
