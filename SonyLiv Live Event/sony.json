@@ -1,0 +1,259 @@
+
+{
+  "name": "Sony Dishmt",
+  "channels": [
+    {
+      "id": "1",
+      "name": "SET HD",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/Sony_HD.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/1.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "sab-hd.sonyliv",
+      "name": "Sony SAB HD",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonySAB.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/sab-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "marathi.sonyliv",
+      "name": "Sony Marathi",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyMarathi.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/marathi.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "pal.sonyliv",
+      "name": "Sony Pal",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyPAL.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/pal.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "aath.sonyliv",
+      "name": "Sony Aath",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyAATH.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/aath.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "yay.sonyliv",
+      "name": "Sony Yay",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyYAYHin.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/yay.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "max-hd.sonyliv",
+      "name": "Sony MAX HD",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyMAX.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/max-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "max.sonyliv",
+      "name": "Sony MAX",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/Sony_Max_SD.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/max.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "max2.sonyliv",
+      "name": "Sony MAX 2",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyMAX2.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/max2.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "wah.sonyliv",
+      "name": "Sony WAH",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/Sony_Wah.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/wah.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "pix-hd.sonyliv",
+      "name": "Sony PIX HD",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyPIX.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/pix-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten1-hd.sonyliv",
+      "name": "Sony Sports Ten 1 HD",
+      "logo": "https://dtil.tmsimg.com/assets/s157591_ld_h15_aa.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten1-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten1.sonyliv",
+      "name": "Sony Sports Ten 1",
+      "logo": "https://dtil.tmsimg.com/assets/s157591_ld_h15_aa.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten1.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten2-hd.sonyliv",
+      "name": "Sony Sports Ten 2 HD",
+      "logo": "https://dtil.tmsimg.com/assets/s157592_ld_h15_aa.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten2-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten2.sonyliv",
+      "name": "Sony Sports Ten 2",
+      "logo": "https://dtil.tmsimg.com/assets/s157592_ld_h15_aa.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten2.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten3-hd.sonyliv",
+      "name": "Sony Sports Ten 3 HD",
+      "logo": "https://dtil.tmsimg.com/assets/GNLZZGG0025TCMR.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten3-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten3.sonyliv",
+      "name": "Sony Sports Ten 3",
+      "logo": "https://dtil.tmsimg.com/assets/GNLZZGG0025TCMR.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten3.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten4-hd.sonyliv",
+      "name": "Sony Sports Ten 4 HD",
+      "logo": "https://www.sonypicturesnetworks.com/images/logos/Sony_Sports_Ten_4_Telugu.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten4-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten4.sonyliv",
+      "name": "Sony Sports Ten 4",
+      "logo": "https://www.sonypicturesnetworks.com/images/logos/Sony_Sports_Ten_4_Tamil.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten4.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten4-kannada.sonyliv",
+      "name": "Sony Sports Ten 4 Kannada",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/SonyTen4Kan.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten4-kannada.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten5-hd.sonyliv",
+      "name": "Sony Sports Ten 5 HD",
+      "logo": "https://dtil.tmsimg.com/assets/s157593_ld_h15_aa.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten5-hd.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "ten5.sonyliv",
+      "name": "Sony Sports Ten 5",
+      "logo": "https://dtil.tmsimg.com/assets/s157593_ld_h15_aa.png?lock=720x540",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/ten5.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    },
+    {
+      "id": "bbc-earth.sonyliv",
+      "name": "Sony BBC Earth HD",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/Sony_BBC_Earth_HD.png",
+      "url": "https://sonydismthjgdtarsadfsghdjf.higuifytdrseaw.workers.dev/live/bbc-earth.sonyliv.m3u8",
+      "group": "Sony Dishmt",
+      "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Mobile Safari/537.36",
+      "referer": "https://www.sonyliv.com/",
+      "origin": "https://www.sonyliv.com/",
+      "manifestType": "hls"
+    }
+  ]
+}
